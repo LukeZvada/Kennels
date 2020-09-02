@@ -12,6 +12,7 @@ export const AnimalList = () => {
 
     // useEffect(() => {
     // }, [animals])
+    //^this is not needed unless the animals array is being updated.
 
 
     return (
