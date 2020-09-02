@@ -1,10 +1,10 @@
 import React from "react"
-import { Animal } from "./animal/Animal"
 import { Customer } from "./customer/Customer"
 import { Employee } from "./employee/Employee"
-import { Location } from "./location/Location"
 import { LocationList } from "./location/LocationList"
 import { LocationProvider } from "./location/LocationProvider"
+import { AnimalProvider } from "./animal/AnimalProvider"
+import { AnimalList } from "./animal/AnimalList"
 
 
 export const Kennel = () => (
@@ -19,9 +19,9 @@ export const Kennel = () => (
 
         <h2>Animals</h2>
         <article className="animals">
-            <Animal />
-            <Animal />
-            <Animal />
+            <AnimalProvider>
+                <AnimalList /> 
+            </AnimalProvider>
         </article>
         
         <h2>Employees</h2>

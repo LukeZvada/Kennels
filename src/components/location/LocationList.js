@@ -9,15 +9,6 @@ export const LocationList = () => {
             getLocations()
         }, [])
 
-    /*
-        eventHub.addeventListener("locationStateChanged", event => {
-            console.log(" **** Locations after state pulled from API  ****")
-        })
-    */
-    useEffect(() => {
-    }, [locations])
-
-
     return (
         <article className="locations">
             {
