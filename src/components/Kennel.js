@@ -3,6 +3,8 @@ import { Animal } from "./animal/Animal"
 import { Customer } from "./customer/Customer"
 import { Employee } from "./employee/Employee"
 import { Location } from "./location/Location"
+import { LocationList } from "./location/LocationList"
+import { LocationProvider } from "./location/LocationProvider"
 
 
 export const Kennel = () => (
@@ -30,9 +32,10 @@ export const Kennel = () => (
         </article>
 
         <h2>Locations</h2>
-        <article className="employees">
-            <Location />
-            <Location />
+        <article className="locations">
+            <LocationProvider> 
+                <LocationList />
+            </LocationProvider>
         </article>
 
         <h2>Customers</h2>
