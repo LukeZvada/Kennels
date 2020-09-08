@@ -3,7 +3,7 @@ import { EmployeeContext } from "./EmployeeProvider";
 import "./Employee.css"
 
 
-export const EmployeeList = () => {
+export const EmployeeList = (props) => {
     const {employees, getEmployees} = useContext(EmployeeContext)
 
     useEffect(() => {
@@ -11,6 +11,10 @@ export const EmployeeList = () => {
         }, [])
 
     return (
+        <>
+        <button onClick={() => props.history.push("/employees/create")}>
+        Add Employee
+        </button>
         <article className="employees">
             {
                 employees.map(employee => {
@@ -21,6 +25,6 @@ export const EmployeeList = () => {
                 })
             }
         </article>
+        </>
     )
-
 }
