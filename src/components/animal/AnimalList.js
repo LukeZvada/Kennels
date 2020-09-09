@@ -1,35 +1,42 @@
 import React, { useContext, useEffect } from "react"
 import { AnimalContext } from "./AnimalProvider";
-import { LocationContext } from "../location/LocationProvider"
-import { CustomerContext } from "../customer/CustomerProvider"
-import { Animal } from "./Animal";
+import { CustomerContext } from "../customer/CustomerProvider";
+import { LocationContext } from "../location/LocationProvider";
+import { Animal } from "./Animal.js";
 import "./Animal.css"
 
-
-export const AnimalList = () => {
-    const {animals, getAnimals} = useContext(AnimalContext)
-    const {locations, getLocations} = useContext(LocationContext)
-    const {customers, getCustomers} = useContext(CustomerContext)
+export const AnimalList = (burrito) => {
+    const { animals, getAnimals } = useContext(AnimalContext)
+    const { customers, getCustomers } = useContext(CustomerContext)
+    const { locations, getLocations } = useContext(LocationContext)
 
     useEffect(() => {
-            getAnimals()
-            getLocations()
-            getCustomers()
-        }, [])
-
+        getAnimals().then(getCustomers).then(getLocations)
+    }, [])
 
     return (
-        <article className="animals">
-            {
-                animals.map(animalObj => {
-                    const animalLocation = locations.find(location => (location.id === animalObj.locationId)) || {}
-                    const animalOwner = customers.find(customer => (customer.id === animalObj.customerId)) || {}
-                    
-                    
-                    return <Animal key={animalObj.id} animalKey={animalObj} ownerKey={animalOwner} locationKey={animalLocation} /> 
-                })
-            }
-        </article>
+        <>
+            <button onClick={() => burrito.history.push("/animals/create")}>
+                Admit New Animal
+            </button>
+            <article className="animals">
+                {
+                    animals.map(animal => {
+                        const owner = customers.find(customer => customer.id === animal.customerId) || {}
+                        const location = locations.find(loc => loc.id === animal.locationId) || {}
+
+                        /*
+                            {
+                                animalKey: {id: 1....}
+                                ownerKey: {id: 1....},
+                                locationKey: {id: 1....}
+                            }
+                        */
+                        return <Animal key={animal.id} animal={animal} owner={owner} location={location} />
+                    })
+                }
+            </article>
+        </>
     )
 
 }

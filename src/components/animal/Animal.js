@@ -1,11 +1,19 @@
 import React from "react"
 import "./Animal.css"
 
-export const Animal = ({animalKey, ownerKey, locationKey}) => (
-                    <section key={animalKey.id} className="animal">
-                        <div><h3>{animalKey.name}</h3></div>
-                        <div>Breed: {animalKey.breed}</div>
-                        <div> Location: {locationKey.name}</div>
-                        <div> Owner: {ownerKey.name}</div>
-                    </section>
+
+/*
+    {
+        animal: {id: 1....}
+        owner: {id: 1....},
+        location: {id: 1....}
+    }
+*/
+export const Animal = ({ animal, owner, location }) => (
+    <section key={animal.id} className="animal">
+        <div><h3>{animal.name}</h3></div>
+        <div>{animal.breed}</div>
+        <div>Owner: {owner.name}</div>
+        <div>Location: {location.name}</div>
+    </section>
 )
