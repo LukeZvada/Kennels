@@ -1,35 +1,34 @@
 import React, { useContext, useEffect } from "react"
-import { EmployeeContext } from "./EmployeeProvider";
+import { EmployeeContext } from "./EmployeeProvider"
+import { Link } from "react-router-dom"
 import "./Employee.css"
-import { LocationContext } from "../location/LocationProvider";
 
-
-export const EmployeeList = (props) => {
-    const {employees, getEmployees} = useContext(EmployeeContext)
-    const {locations, getLocations} = useContext(LocationContext)
-
+export const EmployeeList = props => {
+    const { employees, getEmployees } = useContext(EmployeeContext)
 
     useEffect(() => {
-            getEmployees()
-            getLocations()
-        }, [])
+        getEmployees()
+    }, [])
 
     return (
-        <>
-        <button onClick={() => props.history.push("/employees/create")}>
-        Add Employee
-        </button>
-        <article className="employees">
-            {
-                employees.map(employee => {
-                    const employeeLocation = locations.find(location => location.id === employee.locationId) || {}
-                    return <section key={employee.id} className="employee">
-                        <div><h3>{employee.name}</h3></div>
-                        <div>Address: {employeeLocation.name}</div>
-                    </section>
-                })
-            }
-        </article>
-        </>
+        <div style={{ margin: "0rem 3rem"}}>
+            <h1>Employees</h1>
+
+            <button onClick={() => props.history.push("/employees/create")}>
+                Add Employee
+            </button>
+
+            <article className="employees">
+                {
+                    employees.map(employee => {
+                        return <section className="employee" key={employee.id}>
+                            <Link to={`/employees/${employee.id}`}>
+                                <h3>{employee.name}</h3>
+                            </Link>
+                        </section>
+                    })
+                }
+            </article>
+        </div>
     )
 }

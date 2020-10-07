@@ -1,9 +1,14 @@
 import React, { useState } from "react"
 
-
+/*
+    The context is imported and used by individual components
+    that need data
+*/
 export const EmployeeContext = React.createContext()
 
-
+/*
+ This component establishes what data can be used.
+ */
 export const EmployeeProvider = (props) => {
     const [employees, setEmployees] = useState([])
 
@@ -24,6 +29,12 @@ export const EmployeeProvider = (props) => {
             .then(getEmployees)
     }
 
+    /*
+        You return a context provider which has the
+        `Employees` state, the `addEmployee` function,
+        and the `getEmployee` function as keys. This
+        allows any child elements to access them.
+    */
     return (
         <EmployeeContext.Provider value={{
             employees, addEmployee, getEmployees

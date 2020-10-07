@@ -1,42 +1,38 @@
-import React, { useContext, useEffect } from "react"
-import { AnimalContext } from "./AnimalProvider";
-import { CustomerContext } from "../customer/CustomerProvider";
-import { LocationContext } from "../location/LocationProvider";
-import { Animal } from "./Animal.js";
+import React, { useState, useContext, useEffect } from "react"
+import { AnimalContext } from "./AnimalProvider"
+import Animal from "./Animal"
 import "./Animal.css"
 
-export const AnimalList = (burrito) => {
-    const { animals, getAnimals } = useContext(AnimalContext)
-    const { customers, getCustomers } = useContext(CustomerContext)
-    const { locations, getLocations } = useContext(LocationContext)
+export const AnimalList = ({ history }) => {
+    const { getAnimals, animals, searchTerms } = useContext(AnimalContext)
 
+    const [filteredAnimals, setFiltered] = useState([])
+
+    // Initialization effect hook -> Go get animal data
     useEffect(() => {
-        getAnimals().then(getCustomers).then(getLocations)
+        getAnimals()
     }, [])
 
+    useEffect(() => {
+        const matchingAnimals = animals.filter(animal => animal.name.toLowerCase().includes(searchTerms.toLowerCase()))
+        setFiltered(matchingAnimals)
+    }, [searchTerms])
+
+
+    useEffect(() => {
+        setFiltered(animals)
+    }, [animals])
+
     return (
-        <>
-            <button onClick={() => burrito.history.push("/animals/create")}>
-                Admit New Animal
+        <div style={{ marginTop: "2rem"}}>
+            <button onClick={() => history.push("/animals/create")}>
+                Make Reservation
             </button>
-            <article className="animals">
+            <div className="animals">
                 {
-                    animals.map(animal => {
-                        const owner = customers.find(customer => customer.id === animal.customerId) || {}
-                        const location = locations.find(loc => loc.id === animal.locationId) || {}
-
-                        /*
-                            {
-                                animalKey: {id: 1....}
-                                ownerKey: {id: 1....},
-                                locationKey: {id: 1....}
-                            }
-                        */
-                        return <Animal key={animal.id} animal={animal} owner={owner} location={location} />
-                    })
+                    filteredAnimals.map(animal => <Animal key={animal.id} animal={animal} />)
                 }
-            </article>
-        </>
+            </div>
+        </div>
     )
-
 }
